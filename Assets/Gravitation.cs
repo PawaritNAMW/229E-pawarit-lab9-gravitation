@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class Gravitation : MonoBehaviour
 {
+    Rigidbody rb;
+    const float G = 0.006674f;
+
+    
     public static List<Gravitation> otherObjects;
-    private Rigidbody rb;
-    const float G = 0.006673f;
-    void Awake()
+    [SerializeField] bool planet = false;
+    [SerializeField] int orbitSpeed = 1000;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         if (otherObjects == null)
@@ -14,6 +19,11 @@ public class Gravitation : MonoBehaviour
             otherObjects = new List<Gravitation>();
         }
         otherObjects.Add(this);
+
+        if (!planet)
+        { 
+        rb.AddForce(Vector3.left * orbitSpeed); 
+        }
     }
     void FixedUpdate()
     {
